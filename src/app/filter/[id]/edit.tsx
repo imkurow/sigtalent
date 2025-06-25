@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation' 
 import { supabase } from '@/lib/supabase'
 
 type Keyword = { word: string; score: number }
@@ -9,7 +9,6 @@ type Filter = { id: string; name: string; keywords: Keyword[] }
 
 export default function EditFilter() {
   const params = useParams<{ id: string }>()
-  const router = useRouter()
   const [filter, setFilter] = useState<Filter | null>(null)
   const [keywords, setKeywords] = useState<Keyword[]>([])
   const [loading, setLoading] = useState(false)
@@ -36,7 +35,7 @@ export default function EditFilter() {
   const addKeyword = () => setKeywords([...keywords, { word: '', score: 1 }])
 
   // Handle update keyword field
-  const updateKeyword = (idx: number, key: keyof Keyword, value: any) => {
+  const updateKeyword = (idx: number, key: keyof Keyword, value: string | number) => { // <-- ubah tipe value
     const updated = keywords.map((kw, i) => i === idx ? { ...kw, [key]: value } : kw)
     setKeywords(updated)
   }
